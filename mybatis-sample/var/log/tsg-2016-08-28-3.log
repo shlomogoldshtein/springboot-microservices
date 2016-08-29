@@ -1,0 +1,8 @@
+Scanning file [C:\2Programing\MyProjects\workspace3\mybatis-sample\target\classes\com\tsg\controllers\DBController.class]
+Ignored because not a concrete top-level class: file [C:\2Programing\MyProjects\workspace3\mybatis-sample\target\classes\com\tsg\controllers\DBController.class]
+Scanning file [C:\2Programing\MyProjects\workspace3\mybatis-sample\target\classes\com\tsg\dao\DataDao.class]
+Ignored because not a concrete top-level class: file [C:\2Programing\MyProjects\workspace3\mybatis-sample\target\classes\com\tsg\dao\DataDao.class]
+Scanning file [C:\2Programing\MyProjects\workspace3\mybatis-sample\target\classes\com\tsg\domain\BigDataDO.class]
+Ignored because not a concrete top-level class: file [C:\2Programing\MyProjects\workspace3\mybatis-sample\target\classes\com\tsg\domain\BigDataDO.class]
+Scanning file [C:\2Programing\MyProjects\workspace3\mybatis-sample\target\classes\com\tsg\mybatis\mappers\BigDataMapper.class]
+Identified candidate component class: file [C:\2Programing\MyProjects\workspace3\mybatis-sample\target\classes\com\tsg\mybatis\mappers\BigDataMapper.class]

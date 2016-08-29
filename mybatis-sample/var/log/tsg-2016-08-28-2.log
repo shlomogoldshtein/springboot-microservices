@@ -1,0 +1,13 @@
+==>  Preparing: select * from poc_big_data_table where id = ? 
+==> Parameters: 1(Integer)
+<==      Total: 1
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@3f049056]
+BigDataDO [id=1, txt1=11111, txt2=22222, txt3=33333]
+Started MyBatisApp in 4.122 seconds (JVM running for 4.808)
+Starting MyBatisApp on C9002101275 with PID 36384 (C:\2Programing\MyProjects\workspace3\mybatis-sample\target\classes started by P0022349 in C:\2Programing\MyProjects\workspace3\mybatis-sample)
+Running with Spring Boot v1.4.0.RELEASE, Spring v4.3.2.RELEASE
+No active profile set, falling back to default profiles: default
+Refreshing org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@2b91004a: startup date [Sun Aug 28 15:44:52 IDT 2016]; root of context hierarchy
+Found MyBatis auto-configuration package 'com.tsg'
+Scanning file [C:\2Programing\MyProjects\workspace3\mybatis-sample\target\classes\com\tsg\config\TSGDataSourceConfig.class]
+Ignored because not a concrete top-level class: file [C:\2Programing\MyProjects\workspace3\mybatis-sample\target\classes\com\tsg\config\TSGDataSourceConfig.class]

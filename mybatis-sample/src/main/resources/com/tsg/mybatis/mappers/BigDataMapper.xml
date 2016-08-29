@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+this demonstrate mybatis mappers, the namespace attributes tells mybatis 
+to which java interface this xml match, also notice the java interface package name 
+must match this xml file location path 
+ -->
+<mapper namespace="com.tsg.mybatis.mappers.BigDataMapper">
+<!-- 
+this demo sql  select  command ,
+id= must match the name of the method declared in the java interface class 
+resultType t=ells mybatis what the select return
+it could be a primitive like int, or it can be a doamin object (POJO), 
+the domain fields must match the table
+#{} means the value will be the on the user set inside selectBigDataById() method, 
+in this case we demo, sending primitive as input, look on interface call for demo
+# means the value came from method calling, since we used on the interface with @Param() to define input, we don't need to define parameterType here
+see the interface selectBigDataById() definition
+-->
+    <select id="selectBigDataById" resultType="BigDataDO">
+        select * from poc_big_data_table where id = #{id}
+    </select>
+<!-- 
+this demo sql insert command
+id= must match the name of the method declared in the java interface class
+parameterType= this time we are sending domain object (POJO) as parameter 
+in the value section you see #{} in each one you set the name of the field in the domain object you want to read from
+in this case our POJO contain 3 fields: txt1,txt2,txt3
+for this specific table I also defined a column called id and set it as auto sequance
+the "useGeneratedKeys" tell my batis I want use it and the "keyProperty" tells it wich column was defined as auto sequance
+after mybatis cals the DB and run the command, it will populate the generated id inside the BigDataDO object
+event that this is an insert statment inserts return int - the number of rows inserted
+ -->    
+	<insert id="insertNewRecord" parameterType="BigDataDO" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO
+			poc_big_data_table
+		(txt1,txt2,txt3)
+		VALUES(#{txt1},#{txt2},#{txt3})
+	</insert>
+<!-- 
+here we demo how to insert several rows in one call, we send to the function a List of domain object
+using the foreach tag, we iterate on the list and inserting row by row
+notice this is not DB batch insert, but one row at the time, how to do batch insert look at mybatis documentation
+ -->
+	<insert id="insertListToBigData" parameterType="map" useGeneratedKeys="true">
+		INSERT into poc_big_data_table(
+			txt1,
+			txt2,
+			txt3
+		)VALUES
+		<foreach item="MyList" collection="MyList" open="(" separator="),("
+			close=")">
+			#{MyList.txt1},
+			#{MyList.txt2},
+			#{MyList.txt3}
+		</foreach>
+	</insert>
+<!-- 
+demonstrating sql update, I also demonstrate how we can do conditional update
+in case in the domain object (BigDataDO) some fields are null, will update just the fields that have values
+important!!! when defining new domain object, use only objects like Integer and not primitives like int
+else mybatis will have a problem in case columns contains null, since primitives cant be null
+update method always return int, the number of rows updated
+ -->
+	<update id="updateBigData" parameterType="BigDataDO">
+		UPDATE poc_big_data_table
+		<set>
+			<if test="txt1 != null">txt1 = #{txt1},</if>
+			<if test="txt2 != null">txt2 = #{txt2},</if>
+			<if test="txt3 != null">txt3 = #{txt3}</if>
+		</set>
+		WHERE
+		id = #{id}
+	</update>
+<!-- 
+demonstrate sql delete, the method alwayes return int, the number of rows deleted 
+ -->	
+	<delete id="deleteFromBigData" parameterType="int">
+		DELETE
+		FROM
+			poc_big_data_table
+		WHERE
+			id = #{id}
+	</delete>
+<!-- 
+demonstrate create table command, you can see create table is using the <update> tag
+the command bellow is MySQL command
+ -->	
+	<update id="createDemoTable">
+		CREATE TABLE IF NOT EXISTS demo_table
+		(
+			id int(10) unsigned NOT NULL AUTO_INCREMENT,
+			demo1 varchar(127) COLLATE utf8_unicode_ci NOT NULL,
+			demo2 varchar(127) COLLATE utf8_unicode_ci NOT NULL,
+			PRIMARY KEY (id),
+			UNIQUE KEY username (demo2)
+		) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT
+		CHARSET=utf8 COLLATE=utf8_unicode_ci
+	</update>
+<!-- 
+demonstrating injecting full SQL command, in compare to injecting values using the #{}
+when injecting somthing that it's not a value but part of the command for example the table name
+or in this example the  all SQL we use the $ sighn e.g. ${<my sql command}
+try to avoid using it, since it expose the server to sql injection attackes
+ -->	
+	<update id="runUpdate" parameterType="map">
+		${sqlStr}
+	</update>	
+</mapper>

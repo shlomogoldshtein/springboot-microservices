@@ -1,0 +1,9 @@
+Creating a new SqlSession
+SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@3f049056] was not registered for synchronization because synchronization is not active
+JDBC Connection [com.mchange.v2.c3p0.impl.NewProxyConnection@216914] will not be managed by Spring
+==>  Preparing: select * from poc_big_data_table where id = ? 
+==> Parameters: 1(Integer)
+<==      Total: 1
+Closing non transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@3f049056]
+BigDataDO [id=1, txt1=11111, txt2=22222, txt3=33333]
+Started MyBatisApp in 3.906 seconds (JVM running for 4.54)

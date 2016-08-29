@@ -1,0 +1,15 @@
+Scanning file [C:\2Programing\MyProjects\workspace3\mybatis-sample\target\classes\com\tsg\MyBatisApp.class]
+Ignored because not a concrete top-level class: file [C:\2Programing\MyProjects\workspace3\mybatis-sample\target\classes\com\tsg\MyBatisApp.class]
+Creating MapperFactoryBean with name 'bigDataMapper' and 'com.tsg.mybatis.mappers.BigDataMapper' mapperInterface
+Enabling autowire by type for MapperFactoryBean with name 'bigDataMapper'.
+Property 'configLocation' not specified, using default MyBatis Configuration
+Scanned package: 'com.tsg.domain' for aliases
+Property 'mapperLocations' was not specified or no matching resources found
+Tomcat initialized with port(s): 8081 (http)
+Mapping servlet: 'dispatcherServlet' to [/]
+Mapping filter: 'characterEncodingFilter' to: [/*]
+Mapping filter: 'hiddenHttpMethodFilter' to: [/*]
+Mapping filter: 'httpPutFormContentFilter' to: [/*]
+Mapping filter: 'requestContextFilter' to: [/*]
+No org.mybatis.spring.mapper.MapperFactoryBean found.
+Tomcat started on port(s): 8081 (http)
