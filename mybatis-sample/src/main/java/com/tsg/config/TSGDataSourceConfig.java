@@ -4,6 +4,8 @@ import java.beans.PropertyVetoException;
 
 import javax.sql.DataSource;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,6 +17,7 @@ import org.springframework.jdbc.datasource.init.DataSourceInitializer;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
+import com.tsg.MyBatisApp;
 
 /**
  * since I don't want to use boot default DB connection pulling (tomcat connection pulling) 
@@ -33,6 +36,8 @@ import com.mchange.v2.c3p0.ComboPooledDataSource;
 @Configuration
 @PropertySource("classpath:jdbc-config.properties")
 public class TSGDataSourceConfig {
+	//init logger
+	private static final Logger logger = LogManager.getLogger(TSGDataSourceConfig.class);
 	//tell spring to Inject an instance of it's Environment bean, a utility that makes reading 
 	//propery file easy
     @Autowired
@@ -75,6 +80,7 @@ public class TSGDataSourceConfig {
 			 //database driver class
 			    String driverClassName=this.env.getProperty("tsg.datasource.c3p0.driverClassName");
 			    //create the c3p0 data source bean, and thats it
+			    logger.debug(" creting new c3p0 datasource MaxPoolSize={} MinPoolSize={} AcquireIncrement={} IdleConnectionTestPeriod={} MaxStatements={} ",maxSize,minSize,acquireIncrement,idleTestPeriod,maxStatements);
 	        ComboPooledDataSource dataSource = new ComboPooledDataSource();
 	        dataSource.setMaxPoolSize(maxSize);
 	        dataSource.setMinPoolSize(minSize);
