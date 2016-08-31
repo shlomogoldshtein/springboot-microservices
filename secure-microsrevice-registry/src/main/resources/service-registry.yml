@@ -1,0 +1,14 @@
+# Configure this Discovery Server
+#since this project is the service registry it self using Eureka, we don't want it to register it self
+#will start it on port 1111 after start you can browse to localhost:1111 and see the dashboard, it will
+#show all the services that wass registered with it
+#start by runing this project, than you can run the rest of the services, and you will see them on the dashboard 
+eureka:
+  instance:
+    hostname: localhost
+  client:  # Not a client, don't register with yourself
+    registerWithEureka: false
+    fetchRegistry: false
+
+server:
+  port: 1111   # HTTP (Tomcat) port
