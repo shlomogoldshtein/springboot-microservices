@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- notice this is log4j2 new configuration xml format in compare to old log4j 1 -->
+<Configuration status="WARN">
+	<!-- 
+		define any property you want here that you want to use in later configuration
+		then you can use ${} to inject it, look for the print pattern example
+	 -->
+	<Properties>
+		<!-- 
+		format of log printing  %c(10) c = class name show 10 = levels of class package name e.g com.tsg.....className
+		%M show name of method
+		%L show the line number
+		%p show the message level e.g debug, error fatal and so on
+		-->
+		<Property name="LOG_PATTERN">%d{dd/MMM/yyyy HH:mm:ss,SSS} [%p]- %c{10}.%M(line %L): %m%n</Property>
+		<!-- will be used by file appenders -->
+		<Property name="log-path">/var/log/</Property>
+	</Properties>
+	<Appenders>
+		<!-- appender to pring to console -->
+		<Console name="Console" target="SYSTEM_OUT" follow="true">
+			<PatternLayout pattern="${LOG_PATTERN}" />
+		</Console>
+		<!-- rolling file appender, meaning write to file, up to specified size, then will create new file, changing the old file name accurding to defined pattern -->
+		<RollingFile name="RollingFile" fileName="${log-path}/tsg.log"
+				filePattern="${log-path}/tsg-%d{yyyy-MM-dd}-%i.log" >
+			<PatternLayout pattern="${LOG_PATTERN}" />
+			<Policies>
+			<!-- the size of the log before creating new file -->
+				<SizeBasedTriggeringPolicy size="1 KB" />
+			</Policies>
+			<DefaultRolloverStrategy max="4"/>
+	</RollingFile>		
+	</Appenders>
+	<!-- additivity =false it means we don't want 2 prints, one for this logger and one from parent -->
+
+	<Loggers>
+		<!-- even that we set root to fatal, we can overide spring boot printing to other level -->
+		<logger name="org.springframework.boot" level="info" additivity="false">
+			<!-- to wich appenders this applay -->
+			<AppenderRef ref="Console" />
+			<AppenderRef ref="RollingFile" />
+		</logger>
+		<!-- even that we set root to fatal, we can overide shazelcast printing to other level -->
+		<logger name="com.hazelcast" level="debug" additivity="false">
+			<!-- to wich appenders this applay -->
+			<AppenderRef ref="Console" />
+			<AppenderRef ref="RollingFile" />
+		</logger>		
+		<logger name="com.tsg" level="info" additivity="false">
+			<!-- to wich appenders this applay -->
+			<AppenderRef ref="Console" />
+			<AppenderRef ref="RollingFile" />
+		</logger>	
+		<Root level="fatal">
+			<AppenderRef ref="Console" />
+			<AppenderRef ref="RollingFile" />
+		</Root>
+	</Loggers>
+</Configuration>

@@ -1,0 +1,18 @@
+#for this demo we are going to use instead of application.properties format
+#for the spring boot application configuration, will use the yaml format, another format spring boot support, basically same concept
+#instead of writing eureka.client.serviceUrl= we use the yml hirarchiel structure
+#
+#we are going to use eureka service registry, we are eureka client, so we need to set where we 
+#can find the service registry server, look at secure-microsrevice-registry project, to see how we code the service registry it self
+#next we define this server, we set on which  port it will listen
+#last we set to this microservice application a name, this name will show up in eureka dashboard, 
+#and you can also use it to routs  in Zuul our proxy server, see secure-microservice-api-proxy project for the proxy itself
+eureka: 
+  client: 
+    serviceUrl: 
+      defaultZone: "http://localhost:1111/eureka/"
+server: 
+  port: 8083 # HTTP (Tomcat) port
+spring: 
+  application: 
+    name: secure-rest-microservice-hazelcast

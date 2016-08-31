@@ -1,0 +1,129 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>tsg-microservice</groupId>
+  <artifactId>secure-rest-microservice-hazelcast</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+    <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>1.4.0.RELEASE</version>
+  </parent>
+  <properties>
+   <start-class>com.tsg.SecureService</start-class>
+	</properties>
+	<!-- for the micro servicses we are going to use spring cloud -->
+	<dependencyManagement>
+	    <dependencies>
+	        <dependency>
+	            <groupId>org.springframework.cloud</groupId>
+	            <artifactId>spring-cloud-dependencies</artifactId>
+	            <version>Brixton.SR4</version>
+	            <type>pom</type>
+	            <scope>import</scope>
+	        </dependency>
+	        </dependencies>
+	</dependencyManagement>	
+	<dependencies> 
+	<!-- dpring cloud startes  -->
+     <dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-starter-config</artifactId>
+            <!-- we dont want spring boot to use its default logback looging, we will use log4j2 -->
+		    <exclusions>
+		        <exclusion>
+		            <groupId>org.springframework.boot</groupId>
+		            <artifactId>spring-boot-starter-logging</artifactId>
+		        </exclusion>
+		    </exclusions>  
+    </dependency>
+    <dependency>
+    	<!-- 
+    		we are going to use spring cloud service registry 
+    		netflix contributed to spring cloude there eureka microservice registry
+    	-->
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-starter-eureka</artifactId>
+            <!-- we dont want spring boot to use its default logback looging, we will use log4j2 -->
+		    <exclusions>
+		        <exclusion>
+		            <groupId>org.springframework.boot</groupId>
+		            <artifactId>spring-boot-starter-logging</artifactId>
+		        </exclusion>
+		    </exclusions>          
+    </dependency>
+    <!-- import spring boot -->
+ 	<dependency>    
+            <!-- Setup Spring Boot -->
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+       <!-- we dont want spring boot to use its default logback looging, we will use log4j2 -->
+		    <exclusions>
+		        <exclusion>
+		            <groupId>org.springframework.boot</groupId>
+		            <artifactId>spring-boot-starter-logging</artifactId>
+		        </exclusion>
+		    </exclusions>               
+    </dependency>
+
+        <dependency>
+            <!-- Setup Spring MVC & REST, use Embedded Tomcat -->
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+       <!-- we dont want spring boot to use its default logback looging, we will use log4j2 -->
+		    <exclusions>
+		        <exclusion>
+		            <groupId>org.springframework.boot</groupId>
+		            <artifactId>spring-boot-starter-logging</artifactId>
+		        </exclusion>
+		    </exclusions>               
+        </dependency >
+       <!-- 
+       	we are going to use spring security in this project 
+       	we want to check the identity of the calers to this service
+       	-->        
+         <dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		    <exclusions>
+		        <exclusion>
+		            <groupId>org.springframework.boot</groupId>
+		            <artifactId>spring-boot-starter-logging</artifactId>
+		        </exclusion>
+		    </exclusions> 			
+		</dependency> 
+   		<dependency>
+			<!-- will use log4j2 as looging -->
+   			 <groupId>org.springframework.boot</groupId>
+    		<artifactId>spring-boot-starter-log4j2</artifactId>
+		</dependency>		
+		<!-- 
+		in this demo we are going to show how we use third party distributed cache Hazelcast
+		as our user datastore, where we validate the identity of the calling services
+		 -->
+		<dependency>
+                <groupId>com.hazelcast</groupId>
+                <artifactId>hazelcast</artifactId>
+        </dependency>	      
+ </dependencies>
+ <!-- if you want to be able to export the application as jar and run it from command line
+ add the next build part -->
+<build>
+    <plugins>
+       <plugin>
+           <groupId>org.springframework.boot</groupId>
+           <artifactId>spring-boot-maven-plugin</artifactId>
+       </plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>2.5</version>
+			</plugin>
+			<plugin>
+    			<artifactId>maven-war-plugin</artifactId>
+    			<configuration>
+        			<failOnMissingWebXml>false</failOnMissingWebXml>
+    			</configuration>
+			</plugin>       
+    </plugins>
+</build> 
+</project>
