@@ -1,0 +1,28 @@
+#this is an Edge server (sometime also called API server, or proxy server).
+#we are using spring cloud for it and it uses Netflix contribution to the project called Zuul 
+#the main porpose of this server is to make unify front for service customers, that need not to know
+#on the ip or even port of the different services, they connect only to this edge server
+# and based on they URL path it will redirect them to the correct service
+#in this example this server also dont need to know the ip and port of the service, it uses the Eureka service registry
+#that we defined in the microservice-registry project to get the service details by it's id
+#so we need to tell it the Eureka address, 
+#then we set it's listening port, in this case 8080 , so now all calling clients will call just localhost:8080
+#last and not less important is defining the different routs to the different services 
+#for simplicity in the case i set that all URLS will be rout to the saml service for autentication 
+#and in this case i use service id as registered with Eureka with out knowing its address
+#the id for each service type can be defined as the server name in it's properies.application
+spring:
+  application:
+     name: microservice-api-proxy
+eureka: 
+   client: 
+     serviceUrl: 
+       defaultZone: "http://localhost:1111/eureka/"
+server: 
+  port: 8080
+zuul: 
+  routes:     
+    SAMEL-SERVICE:
+     path: /**
+     serviceId: SAMEL-SERVICE
+     stripPrefix: false
