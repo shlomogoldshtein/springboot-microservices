@@ -46,7 +46,7 @@ public class ApiGateway {
 
 	}
 	/**
-	 * adding this cors filter to enable cross origin 
+	 * adding this cors filter to enable cross origin fhfh
 	 * @return
 	 */
 	@Bean
